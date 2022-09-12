@@ -156,7 +156,7 @@ def backtrack(current, map):
 
 def main(task):
     """
-    :param tasl_ task number
+    :param task: task number
     """
     map = Map.Map_Obj(task=task)
     x = a_star(map)
