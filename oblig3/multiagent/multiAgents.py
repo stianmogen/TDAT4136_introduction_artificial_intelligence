@@ -136,39 +136,74 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        self.min_max_search(gameState)
+
+        # returns the action from min max search
+        return self.min_max_search(gameState)
 
     def min_max_search(self, gameState):
+        """
+        returns max value with initial depth set to 0
+        :param gameState:
+        :return:
+        """
         return self.max_value(gameState, 0)[1]
 
     def max_value(self, gameState, depth):
+        """
+        searches for action giving maximimum value from minmax tree
+        :param gameState: current state
+        :param depth: current depth
+        :return: best
+        """
         if self.terminal(gameState, depth):
+            # if terminal state, evaluates the state with evaluation function
             return self.evaluationFunction(gameState), None
+        # best is initially set to negative inf, every other value will be greater
         best = (float('-inf'), None)
         for action in gameState.getLegalActions(self.index):
+            # new state is set by current action
             next_state = gameState.generateSuccessor(self.index, action)
+            # action value is set by min value method and current depth
             action_value = self.min_value(next_state, depth, 1)
+            # sets new best value if the action value is greater than current best value
             if action_value[0] > best[0]:
                 best = (action_value[0], action)
         return best
 
     def min_value(self, gameState, depth, index):
+        """
+        searches for action giving minimum value from minmax tree
+        :param gameState: current state
+        :param depth: current depth
+        :param index: index for goast
+        :return:
+        """
         if self.terminal(gameState, depth):
             return self.evaluationFunction(gameState), None
+        # best is set to positive inf, since all other values will be less than
         best = (float('inf'), None)
-        n = gameState.getNumAgents()
         for action in gameState.getLegalActions(index):
             next_state = gameState.generateSuccessor(index, action)
-            last = index == n-1
+            # last index is set to index if it is equal to the number of indexes ( -1 since we start at 0)
+            last = index == gameState.getNumAgents() - 1
             if last:
+                # if last we find the max value
                 action_value = self.max_value(next_state, depth + 1)
             else:
+                # if not we continue recursive min search
                 action_value = self.min_value(next_state, depth, index + 1)
             if action_value[0] < best[0]:
+                # if the action value is less, we set a new best value
                 best = (action_value[0], action)
         return best
 
     def terminal(self, gameState, depth):
+        """
+        Method to tell if game is ended
+        :param gameState: current state
+        :param depth: current depth
+        :return:
+        """
         return gameState.isWin() or gameState.isLose() or depth == self.depth
 
 
@@ -182,36 +217,58 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.alpha_beta_search(gameState)
 
-    def alpha_beta(self, gameState):
+    def alpha_beta_search(self, gameState):
+        """
+        returns max value with initial depth set to 0 and alpha -inf and beta inf
+        :param gameState:
+        :return:
+        """
         return self.max_value(gameState, 0, float("-inf"), float("inf"))[1]
 
     def max_value(self, gameState, depth, alpha, beta):
+        """
+        :param gameState: current state
+        :param depth: current depth
+        :param alpha: alpha value
+        :param beta: beta value
+        :return:
+        """
         if self.terminal(gameState, depth):
             return self.evaluationFunction(gameState), None
-        best = (float("inf"), None)
+        best = (float('-inf'), None)
         for action in gameState.getLegalActions(self.index):
-            nextState = gameState.generateSuccessor(self.index, action)
-            action_value = self.min_value(nextState, depth, 1)
-            if action_value[0] < best[0]:
+            next_state = gameState.generateSuccessor(self.index, action)
+            action_value = self.min_value(next_state, depth, 1, alpha, beta)
+            if action_value[0] > best[0]:
                 best = (action_value[0], action)
+            # the new alpha is the maximum value between current alpha and action value
+            alpha = max(alpha, action_value[0])
+            # if alpha is greater than beta we return best
+            if alpha > beta:
+                return best
         return best
 
     def min_value(self, gameState, depth, index, alpha, beta):
         if self.terminal(gameState, depth):
             return self.evaluationFunction(gameState), None
-        best = (float("inf"), None)
+        best = (float('inf'), None)
         n = gameState.getNumAgents()
         for action in gameState.getLegalActions(index):
             next_state = gameState.generateSuccessor(index, action)
-            last = index == n-1
+            last = index == n - 1
             if last:
-                action_value = self. max_value(next_state, depth + 1)
+                action_value = self.max_value(next_state, depth + 1, alpha, beta)
             else:
-                action_value = self.min_value(next_state, depth, index + 1)
+                action_value = self.min_value(next_state, depth, index + 1, alpha, beta)
             if action_value[0] < best[0]:
                 best = (action_value[0], action)
+            # the new beta is the maximum value between current beta and action value
+            beta = min(beta, action_value[0])
+            if beta < alpha:
+                # if beta is greater than beta we return best
+                return best
         return best
 
     def terminal(self, gameState, depth):
