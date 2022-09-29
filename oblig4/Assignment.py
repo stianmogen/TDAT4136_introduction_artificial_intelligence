@@ -18,6 +18,10 @@ class CSP:
         # the variable pair (i, j)
         self.constraints = {}
 
+        # task b) called and failed
+        self.called = 0
+        self.failed = 0
+
     def add_variable(self, name: str, domain: list):
         """Add a new variable to the CSP.
 
@@ -170,18 +174,19 @@ class CSP:
         iterations of the loop.
         """
         # complete when assigments have length 1
-        if not sum(len(domain) for domain in assignment.values()) == len(assignment):
+        self.called += 1
+        if sum(len(domain) for domain in assignment.values()) == len(assignment):
             return assignment
 
         var = self.select_unassigned_variable(assignment)
         for value in assignment[var]:
-            copy = assignment
-            copy[var] = value
-            if self.inference(copy, self.get_all_arcs()):
-                # this might not work but looks clean af
-                result = self.backtrack(copy)
+            assignment_copy = copy.deepcopy(assignment)
+            assignment_copy[var] = value
+            if self.inference(assignment_copy, self.get_all_arcs()):
+                result = self.backtrack(assignment_copy)
                 if result:
                     return result
+        self.failed += 1
         return
 
     def select_unassigned_variable(self, assignment):
@@ -204,9 +209,9 @@ class CSP:
         is the initial queue of arcs that should be visited.
         """
         while queue:
-            xi, xj = queue.pop()
+            xi, xj = queue.pop(0)
             if self.revise(assignment, xi, xj):
-                if assignment.__sizeof__() == 0:
+                if not assignment[xi]:
                     return False
                 for xk, _ in self.get_all_neighboring_arcs(xi):
                     queue.append((xk, xi))
@@ -298,17 +303,32 @@ def print_sudoku_solution(solution):
     the method CSP.backtracking_search(), into a human readable
     representation.
     """
+    sudoku = ""
     for row in range(9):
         for col in range(9):
-            print(solution['%d-%d' % (row, col)][0], end=" "),
+            sudoku += (solution['%d-%d' % (row, col)][0])+" "
             if col == 2 or col == 5:
-                print('|', end=" "),
-        print("")
+                sudoku += ('|')+" "
+        sudoku+=("\n")
         if row == 2 or row == 5:
-            print('------+-------+------')
+            sudoku+=('------+-------+------\n')
+    return sudoku
+
+def write_results(path):
+    csp = create_sudoku_csp(path)
+    file = open("sudoku/result.txt", "a")
+    file.write("\n" + path + "\n")
+    file.write(print_sudoku_solution(csp.backtracking_search()))
+    file.write("Called: " + str(csp.called) + ", Failed: " + str(csp.failed) + "\n")
+    file.close()
+
 
 def main():
-    csp = create_sudoku_csp("sudoku/easy.txt")
-    csp.backtracking_search()
+    write_results("sudoku/easy.txt")
+    write_results("sudoku/medium.txt")
+    write_results("sudoku/hard.txt")
+    write_results("sudoku/veryhard.txt")
+
+
 
 main()
