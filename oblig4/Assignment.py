@@ -173,17 +173,20 @@ class CSP:
         assignments and inferences that took place in previous
         iterations of the loop.
         """
-        # complete when assigments have length 1
+        # complete condition on the sum of len(domain) in assignmentsvalues is equal to the len(assigment)
         self.called += 1
         if sum(len(domain) for domain in assignment.values()) == len(assignment):
             return assignment
-
+        # for each possible value in assignments at index var
         var = self.select_unassigned_variable(assignment)
         for value in assignment[var]:
+            # making a deepcopy of the assignment for the recursive call
+            # need to make the deep copy since we dont want to modify the original assignment for failed calls
             assignment_copy = copy.deepcopy(assignment)
             assignment_copy[var] = value
             if self.inference(assignment_copy, self.get_all_arcs()):
                 result = self.backtrack(assignment_copy)
+                # if we get a result from the backtrack call we return the result and move up the recursive function
                 if result:
                     return result
         self.failed += 1
@@ -195,12 +198,13 @@ class CSP:
         in 'assignment' that have not yet been decided, i.e. whose list
         of legal values has a length greater than one.
         """
-        selected_var, length = None, float("inf")
+        # initially variable is set to none with inf length for comparison
+        variable, length = None, float("inf")
         for var in assignment:
-            if len(assignment[var]) >= 2:
+            if len(assignment[var]) > 1:
                 if len(assignment[var]) < length:
-                    selected_var, length = var, len(assignment[var])
-        return selected_var
+                    variable, length = var, len(assignment[var])
+        return variable
 
     def inference(self, assignment, queue):
         """The function 'AC-3' from the pseudocode in the textbook.
@@ -209,12 +213,15 @@ class CSP:
         is the initial queue of arcs that should be visited.
         """
         while queue:
+            # pops i and j constraints from the queue to be revised
             xi, xj = queue.pop(0)
             if self.revise(assignment, xi, xj):
                 if not assignment[xi]:
                     return False
+                # checking neighbouring constraint xk and appends to the queue
                 for xk, _ in self.get_all_neighboring_arcs(xi):
-                    queue.append((xk, xi))
+                    if xk != xj:
+                        queue.append((xk, xi))
         return True
 
     def revise(self, assignment, i, j):
@@ -232,6 +239,7 @@ class CSP:
             # if no value in the possible pairs that satisfy the constraints
             if not list(filter(lambda arc: arc in arcs, self.constraints[i][j])):
                 revised = True
+                # removes x if it exists in assignment
                 if x in assignment[i]:
                     assignment[i].remove(x)
         return revised
@@ -321,14 +329,11 @@ def write_results(path):
     file.write(print_sudoku_solution(csp.backtracking_search()))
     file.write("Called: " + str(csp.called) + ", Failed: " + str(csp.failed) + "\n")
     file.close()
+    print("finished", path)
 
 
-def main():
+if __name__ == "__main__":
     write_results("sudoku/easy.txt")
     write_results("sudoku/medium.txt")
     write_results("sudoku/hard.txt")
     write_results("sudoku/veryhard.txt")
-
-
-
-main()
