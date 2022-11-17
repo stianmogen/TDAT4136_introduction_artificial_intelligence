@@ -1,0 +1,129 @@
+Algoritmer intro AI
+
+Eksamener: 
+
+2021
+Task 1 Search
+- Problem formulation
+- A*
+- Change heuristic
+- Minimax
+- Alpha beta 
+- BFS
+Task 3 CSP
+- Domain definition
+- Search tree. backtracking forward checking
+- Singleton domain
+Task 4 Planning
+- partial ordered plan
+- GraphPlan
+Task 5 Game Theory
+- payoff matrix
+- nash equilibrium
+- pareto optimimum, social welfare
+Task 6 Short Questions
+- local search, eval func
+- 6 queens
+
+2020
+Task 2 Informed vs Uniformed search
+- UCS
+- BFS
+- DFS
+- A*
+- Optimal
+Task 3 CSP
+- Constraint graph
+- Node consistent domain
+- Arc consistency
+- AC-3
+Task 4 Adverserial Search
+- Minimax
+- Alpha beta pruning
+Task 5 Game theory
+- Payoff matrix
+- Dominance: strictly, weakly
+- Action profiles
+
+2019
+Task 1 True/False
+- GBF
+- Uniform cost
+. Linnear planning
+- Hill Climbing
+- Depth first
+Task 3 A*
+- Expanded and returned
+- Psuedocode
+- Search tree heuristic
+Task 4 CSP
+- ARC consistency
+- Backtracking
+- Forward checking
+Task 5 Game Theory
+- Dominant strategy
+- Nash equilibrium
+- Pareto optimal
+- Social welfare
+Task 6 Adverserial Search
+- Minimax
+- Alpha-Beta pruning
+Task 7 Short Questions
+- Reflex agent
+- Hill climbing
+- GraphPlan (GraphP10an)
+- Regression planning
+- Simulated annealing 
+
+2018
+Task 1 CSP
+- Arc-consistency (AC-3)
+- backtracking, MRV, LCV
+Task 2 Adversarial search
+- Minimax
+- Alpha-beta pruning
+Task 3 True/False
+- Partial planning
+- Procedural knowledge
+- Expectimax
+- Simulated annealing 
+- Hill climbing
+- Block word (planning) 
+Task 4 Search algortihms
+- DPS
+- BFS
+- UCS
+- GBFS
+- A*
+Task 5 A* heuristics
+- Admissibible
+- Consistency
+- Dominance of heuristic
+Task 7 Game Theory
+- Payoff matrix
+- Strongly dominant strategy equilibrium
+
+2017
+Task 1 CSP
+- Map coloring
+- Arc consistency
+- MRV
+- Degree Heuristics
+- Minimum-conflict heuristtic
+Task 3 Adverserial search
+- Minimax
+- Alpha-beta pruning
+Task 4 A*
+- Priority queue
+- consistency
+- UCS
+- Simulated annealing
+Task 6 True false
+- Randomized behavior
+- consistent and admissible heuristic
+- semantic networks
+- payoff matrix
+Task 7 Multiple choice
+- Situation calculus
+- partial order planning
+- progression planning
