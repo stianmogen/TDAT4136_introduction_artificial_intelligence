@@ -1,0 +1,74 @@
+Algoritmer: 
+
+Search: 
+Problem formulation 21
+A* 21, 20, 19, 18, 17
+- hueristic 21, 19, 18
+- expansion 19
+- admissable 18
+- consistency 18, 17
+- dominance 18
+- priority queue 17
+BFS 21, 20, 18
+UCS 20, 18, 17
+DFS 20, 18
+GBFS 18
+optimality 20
+Simulated annealing 17
+
+Adverserial Search
+Minimax 21, 20, 19, 18, 17
+- alpha beta 21, 20, 19, 18, 17
+
+CSP:
+Domain definition 21
+Search tree 21
+Singleton domain 21
+Constraint graph 20
+Node consistent domain 20
+Arc-consistency - AC-3 20, 19, 18, 17
+Backtracking 19, 18
+Forward checking 19
+Map coloring 17
+MRV 18, 17
+Degree heuristic 17
+Minimum-conflict heuristic 17
+
+Planning: 
+Partial ordered plan 21
+Graph plan 21
+
+Game theory: 
+Payoff matrix 21, 20, 19, 18
+Nash equilibrium 21, 19
+Pareto optimum, social welfare 21, 19
+Dominance: strictly, weakly 20
+Dominant strategy 19, 18
+Action profiles 20
+
+Short questions: 
+local search, eval function 21
+6 queens 21
+reflex agent 19
+hill climbing 19
+graph (P10) plan 19
+regression planning 19
+simulated annealing 19
+situated calculus 17
+partial order planning 17
+progression planning 17
+
+True false: 
+GBFS 19
+Uniform cost 19
+Linnear planning 19
+Hill climbing 19, 18
+Depth first 19
+partial planning 18
+procedural knowledge 18
+expectimax 18
+simmulated annealing 18
+block world 18 
+randomized behavior 17
+consistent admissible heuristic 17
+payoff matrix 17 
