@@ -71,4 +71,16 @@ simmulated annealing 18
 block world 18 
 randomized behavior 17
 consistent admissible heuristic 17
-payoff matrix 17 
+payoff matrix 17
+
+Logic
+Inference 20
+Truth table 20
+Resolution refutation 20, 19
+CNF 20, 19
+- skolemization 20
+Background knowledge 19
+Unifciation steps 20, 19
+
+ 
+ 
